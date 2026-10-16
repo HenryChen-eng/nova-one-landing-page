@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>功能特性 — Nova One</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%230071e3'/></svg>">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --text-primary: #1d1d1f; --text-secondary: #86868b; --bg-white: #ffffff; --bg-gray: #f5f5f7; --accent: #0071e3; --accent-hover: #0077ed; --nav-height: 48px; --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1); --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Microsoft YaHei", sans-serif; color: var(--text-primary); background: var(--bg-white); line-height: 1.5; font-size: 17px; overflow-x: hidden; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.page-fade-in { animation: pageFadeIn 0.6s var(--ease-out) both; }
+@keyframes pageFadeIn { from { opacity: 0; } to { opacity: 1; } }
+.nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-height); background: rgba(255,255,255,0.7); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.08); transition: background 0.3s ease, box-shadow 0.3s ease; }
+.nav.scrolled { background: rgba(255,255,255,0.9); box-shadow: 0 1px 10px rgba(0,0,0,0.05); }
+.nav-inner { max-width: 1024px; margin: 0 auto; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; }
+.nav-logo { font-size: 18px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.02em; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-size: 12px; color: var(--text-primary); opacity: 0.8; transition: opacity 0.2s; position: relative; }
+.nav-links a:hover { opacity: 1; text-decoration: none; }
+.nav-links a.active { opacity: 1; font-weight: 500; }
+.nav-links a.active::after { content: ""; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px; background: var(--text-primary); border-radius: 1px; }
+.page-hero { padding-top: calc(var(--nav-height) + 100px); padding-bottom: 60px; text-align: center; }
+.page-hero .eyebrow { font-size: 21px; font-weight: 600; color: var(--text-secondary); margin-bottom: 12px; opacity: 0; animation: slideUpFade 0.8s var(--ease-out) 0.1s forwards; }
+.page-hero h1 { font-size: clamp(48px, 8vw, 72px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; margin-bottom: 20px; opacity: 0; animation: slideUpFade 0.8s var(--ease-out) 0.25s forwards; }
+.page-hero .subtitle { font-size: clamp(19px, 2.5vw, 24px); color: var(--text-secondary); max-width: 600px; margin: 0 auto; opacity: 0; animation: slideUpFade 0.8s var(--ease-out) 0.4s forwards; }
+@keyframes slideUpFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.feature-detail { padding: 100px 22px; }
+.feature-detail:nth-child(even) { background: var(--bg-gray); }
+.feature-detail-inner { max-width: 1024px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+.feature-detail-inner.reverse { direction: rtl; }
+.feature-detail-inner.reverse > * { direction: ltr; }
+.feature-text h2 { font-size: clamp(32px, 5vw, 48px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 16px; }
+.feature-text p { font-size: 19px; color: var(--text-secondary); line-height: 1.5; margin-bottom: 24px; }
+.feature-text ul { list-style: none; }
+.feature-text ul li { font-size: 17px; color: var(--text-primary); padding: 12px 0; border-bottom: 1px solid #d2d2d7; display: flex; align-items: center; gap: 12px; }
+.feature-text ul li::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
+.feature-visual { width: 100%; height: 360px; border-radius: 28px; position: relative; overflow: hidden; }
+.feature-visual.chip { background: linear-gradient(145deg, #1a1a2e, #16213e); }
+.feature-visual.chip::after { content: "N1"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 72px; font-weight: 700; background: linear-gradient(135deg, #2997ff, #5e5ce6); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.feature-visual.display { background: linear-gradient(145deg, #f5f5f7, #e8e8ed); }
+.feature-visual.display::after { content: ""; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 70%; height: 70%; border-radius: 16px; background: linear-gradient(135deg, #ff375f, #ff9f0a, #ffd60a, #34c759, #0071e3, #5e5ce6); opacity: 0.8; }
+.feature-visual.battery { background: linear-gradient(145deg, #0a0a0a, #1c1c1e); }
+.feature-visual.battery::after { content: "29h"; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 72px; font-weight: 700; color: #34c759; }
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.cta-section { background: var(--bg-black); color: #f5f5f7; padding: 100px 22px; text-align: center; }
+.cta-section h2 { font-size: clamp(32px, 5vw, 48px); font-weight: 700; margin-bottom: 16px; }
+.cta-section p { font-size: 19px; color: #86868b; margin-bottom: 32px; }
+.btn-primary { display: inline-block; padding: 12px 28px; background: var(--accent); color: #fff; border-radius: 980px; font-size: 17px; transition: all 0.25s var(--ease-out); }
+.btn-primary:hover { background: var(--accent-hover); text-decoration: none; transform: scale(1.03); }
+.footer { background: var(--bg-gray); padding: 30px 22px; border-top: 1px solid #d2d2d7; font-size: 12px; color: var(--text-secondary); }
+.footer-inner { max-width: 1024px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.footer-links { display: flex; gap: 20px; list-style: none; }
+.footer-links span { color: var(--text-secondary); font-size: 12px; }
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .feature-detail-inner { grid-template-columns: 1fr; gap: 32px; }
+  .feature-detail-inner.reverse { direction: ltr; }
+  .feature-detail { padding: 60px 22px; }
+  .footer-inner { flex-direction: column; }
+}
+</style>
+</head>
+<body class="page-fade-in">
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Nova</a>
+    <ul class="nav-links">
+      <li><a href="index.html">概览</a></li>
+      <li><a href="features.html" class="active">功能</a></li>
+      <li><a href="performance.html">性能</a></li>
+      <li><a href="design.html">设计</a></li>
+      <li><a href="buy.html">购买</a></li>
+    </ul>
+  </div>
+</nav>
+<section class="page-hero">
+  <div class="eyebrow">功能特性</div>
+  <h1>三大核心。<br>极致体验。</h1>
+  <p class="subtitle">每一项功能，都为提升你的创造力而生。</p>
+</section>
+<section class="feature-detail">
+  <div class="feature-detail-inner">
+    <div class="feature-text reveal">
+      <h2>N1 芯片</h2>
+      <p>3 纳米制程工艺，16 核神经网络引擎，带来前所未有的性能与能效平衡。</p>
+      <ul>
+        <li>CPU 性能提升 40%</li>
+        <li>GPU 图形效率提升 60%</li>
+        <li>神经网络引擎算力翻倍</li>
+        <li>AI 图像处理实时加速</li>
+      </ul>
+    </div>
+    <div class="feature-visual chip reveal"></div>
+  </div>
+</section>
+<section class="feature-detail">
+  <div class="feature-detail-inner reverse">
+    <div class="feature-text reveal">
+      <h2>超视网膜 XDR 显示屏</h2>
+      <p>120Hz ProMotion 自适应刷新率，峰值亮度 2000 尼特，色彩精准度达到专业级标准。</p>
+      <ul>
+        <li>ProMotion 自适应刷新率</li>
+        <li>2000 尼特峰值亮度</li>
+        <li>P3 广色域显示</li>
+        <li>原彩显示技术</li>
+      </ul>
+    </div>
+    <div class="feature-visual display reveal"></div>
+  </div>
+</section>
+<section class="feature-detail">
+  <div class="feature-detail-inner">
+    <div class="feature-text reveal">
+      <h2>全天续航</h2>
+      <p>最长 29 小时视频播放，低功耗架构配合智能电源管理，一天重度使用无忧。</p>
+      <ul>
+        <li>29 小时视频播放</li>
+        <li>快速充电 30 分钟充至 50%</li>
+        <li>智能电源管理</li>
+        <li>支持 MagSafe 无线充电</li>
+      </ul>
+    </div>
+    <div class="feature-visual battery reveal"></div>
+  </div>
+</section>
+<section class="cta-section">
+  <h2 class="reveal">想亲自体验吗？</h2>
+  <p class="reveal">到店试用，或在线购买。</p>
+  <a href="buy.html" class="btn-primary reveal">立即购买</a>
+</section>
+<footer class="footer">
+  <div class="footer-inner">
+    <div>Copyright © 2026 Nova Inc. 保留所有权利。</div>
+    <ul class="footer-links">
+      <li><span>隐私政策</span></li>
+      <li><span>使用条款</span></li>
+      <li><span>销售政策</span></li>
+    </ul>
+  </div>
+</footer>
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 30); });
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); } });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+document.querySelectorAll('a[href$".html"]').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const href = this.getAttribute('href');
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity 0.3s ease';
+    setTimeout(() => { window.location.href = href; }, 300);
+  });
+});
+</script>
+</body>
+</html>
