@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>性能表现 — Nova One</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%230071e3'/></svg>">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --text-primary: #1d1d1f; --text-secondary: #86868b; --text-on-dark: #f5f5f7; --text-on-dark-secondary: #86868b; --bg-white: #ffffff; --bg-black: #000000; --bg-gray: #f5f5f7; --accent: #0071e3; --accent-hover: #0077ed; --nav-height: 48px; --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1); --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Microsoft YaHei", sans-serif; color: var(--text-primary); background: var(--bg-black); line-height: 1.5; font-size: 17px; overflow-x: hidden; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.page-fade-in { animation: pageFadeIn 0.6s var(--ease-out) both; }
+@keyframes pageFadeIn { from { opacity: 0; } to { opacity: 1; } }
+.nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-height); background: rgba(0,0,0,0.7); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); z-index: 1000; border-bottom: 1px solid rgba(255,255,255,0.1); transition: background 0.3s ease; }
+.nav.scrolled { background: rgba(0,0,0,0.9); }
+.nav-inner { max-width: 1024px; margin: 0 auto; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; }
+.nav-logo { font-size: 18px; font-weight: 600; color: #fff; letter-spacing: -0.02em; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-size: 12px; color: #fff; opacity: 0.8; transition: opacity 0.2s; position: relative; }
+.nav-links a:hover { opacity: 1; text-decoration: none; }
+.nav-links a.active { opacity: 1; font-weight: 500; }
+.nav-links a.active::after { content: ""; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px; background: #fff; border-radius: 1px; }
+.page-hero { padding-top: calc(var(--nav-height) + 100px); padding-bottom: 80px; text-align: center; color: #fff; }
+.page-hero .eyebrow { font-size: 21px; font-weight: 600; color: #86868b; margin-bottom: 12px; opacity: 0; animation: slideUpFade 0.8s var(--ease-out) 0.1s forwards; }
+.page-hero h1 { font-size: clamp(48px, 8vw, 72px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; margin-bottom: 20px; color: #fff; opacity: 0; animation: slideUpFade 0.8s var(--ease-out) 0.25s forwards; }
+.page-hero .subtitle { font-size: clamp(19px, 2.5vw, 24px); color: #86868b; max-width: 600px; margin: 0 auto; opacity: 0; animation: slideUpFade 0.8s var(--ease-out) 0.4s forwards; }
+@keyframes slideUpFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.big-stats { max-width: 900px; margin: 0 auto; padding: 60px 22px; }
+.big-stat { text-align: center; padding: 60px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.big-stat:last-child { border-bottom: none; }
+.big-stat-number { font-size: clamp(80px, 12vw, 140px); font-weight: 700; letter-spacing: -0.03em; line-height: 1; margin-bottom: 16px; background: linear-gradient(90deg, #2997ff, #5e5ce6); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+.big-stat-label { font-size: 21px; color: #86868b; max-width: 500px; margin: 0 auto; }
+.compare-section { padding: 100px 22px; background: #111; }
+.compare-title { text-align: center; font-size: clamp(32px, 5vw, 48px); font-weight: 700; color: #fff; margin-bottom: 60px; letter-spacing: -0.02em; }
+.compare-grid { max-width: 800px; margin: 0 auto; }
+.compare-row { display: grid; grid-template-columns: 1fr 1fr 1fr; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: center; }
+.compare-row.header { font-size: 14px; color: #86868b; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 16px; margin-bottom: 8px; }
+.compare-cell { font-size: 17px; color: #fff; }
+.compare-cell.highlight { color: #2997ff; font-weight: 600; }
+.compare-cell.dim { color: #86868b; }
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.cta-section { padding: 100px 22px; text-align: center; }
+.cta-section h2 { font-size: clamp(32px, 5vw, 48px); font-weight: 700; color: #fff; margin-bottom: 16px; }
+.cta-section p { font-size: 19px; color: #86868b; margin-bottom: 32px; }
+.btn-primary { display: inline-block; padding: 12px 28px; background: var(--accent); color: #fff; border-radius: 980px; font-size: 17px; transition: all 0.25s var(--ease-out); }
+.btn-primary:hover { background: var(--accent-hover); text-decoration: none; transform: scale(1.03); }
+.footer { background: #111; padding: 30px 22px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12px; color: #86868b; }
+.footer-inner { max-width: 1024px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.footer-links { display: flex; gap: 20px; list-style: none; }
+.footer-links span { color: #86868b; font-size: 12px; }
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .compare-row { grid-template-columns: 1fr; gap: 8px; text-align: left; }
+  .compare-row.header { display: none; }
+  .footer-inner { flex-direction: column; }
+}
+</style>
+</head>
+<body class="page-fade-in">
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Nova</a>
+    <ul class="nav-links">
+      <li><a href="index.html">概览</a></li>
+      <li><a href="features.html">功能</a></li>
+      <li><a href="performance.html" class="active">性能</a></li>
+      <li><a href="design.html">设计</a></li>
+      <li><a href="buy.html">购买</a></li>
+    </ul>
+  </div>
+</nav>
+<section class="page-hero">
+  <div class="eyebrow">性能表现</div>
+  <h1>芯片之力。<br>远超期待。</h1>
+  <p class="subtitle">N1 芯片，3 纳米制程，重新定义移动计算的极限。</p>
+</section>
+<section class="big-stats">
+  <div class="big-stat reveal">
+    <div class="big-stat-number" data-count="40" data-suffix="%">0%</div>
+    <div class="big-stat-label">CPU 性能提升，相比上一代芯片</div>
+  </div>
+  <div class="big-stat reveal">
+    <div class="big-stat-number" data-count="60" data-suffix="%">0%</div>
+    <div class="big-stat-label">GPU 图形效率提升，游戏与渲染更流畅</div>
+  </div>
+  <div class="big-stat reveal">
+    <div class="big-stat-number" data-count="2" data-suffix="×">0×</div>
+    <div class="big-stat-label">神经网络引擎算力翻倍，AI 任务加速</div>
+  </div>
+</section>
+<section class="compare-section">
+  <h2 class="compare-title reveal">对比数据</h2>
+  <div class="compare-grid reveal">
+    <div class="compare-row header">
+      <div>项目</div>
+      <div>Nova One (N1)</div>
+      <div>上一代 (N0)</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell dim">CPU 单核</div>
+      <div class="compare-cell highlight">2800</div>
+      <div class="compare-cell">2000</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell dim">GPU 跑分</div>
+      <div class="compare-cell highlight">120 FPS</div>
+      <div class="compare-cell">75 FPS</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell dim">AI 推理</div>
+      <div class="compare-cell highlight">38 TOPS</div>
+      <div class="compare-cell">19 TOPS</div>
+    </div>
+    <div class="compare-row">
+      <div class="compare-cell dim">能效比</div>
+      <div class="compare-cell highlight">+45%</div>
+      <div class="compare-cell">基准</div>
+    </div>
+  </div>
+</section>
+<section class="cta-section">
+  <h2 class="reveal">性能，眼见为实。</h2>
+  <p class="reveal">亲自上手，感受 N1 芯片的速度。</p>
+  <a href="buy.html" class="btn-primary reveal">立即购买</a>
+</section>
+<footer class="footer">
+  <div class="footer-inner">
+    <div>Copyright © 2026 Nova Inc. 保留所有权利。</div>
+    <ul class="footer-links">
+      <li><span>隐私政策</span></li>
+      <li><span>使用条款</span></li>
+      <li><span>销售政策</span></li>
+    </ul>
+  </div>
+</footer>
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 30); });
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); } });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+function animateCountUp(el) {
+  const target = parseFloat(el.dataset.count);
+  const suffix = el.dataset.suffix || '';
+  const duration = 2000;
+  const start = performance.now();
+  function update(currentTime) {
+    const elapsed = currentTime - start;
+    const progress = Math.min(elapsed / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    const current = target * eased;
+    el.textContent = Math.round(current) + suffix;
+    if (progress < 1) requestAnimationFrame(update);
+  }
+  requestAnimationFrame(update);
+}
+const countObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) { animateCountUp(entry.target); countObserver.unobserve(entry.target); } });
+}, { threshold: 0.5 });
+document.querySelectorAll('[data-count]').forEach(el => countObserver.observe(el));
+document.querySelectorAll('a[href$".html"]').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const href = this.getAttribute('href');
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity 0.3s ease';
+    setTimeout(() => { window.location.href = href; }, 300);
+  });
+});
+</script>
+</body>
+</html>
