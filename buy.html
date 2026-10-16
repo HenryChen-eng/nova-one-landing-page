@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>购买 Nova One</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='40' fill='%230071e3'/></svg>">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root { --text-primary: #1d1d1f; --text-secondary: #86868b; --bg-white: #ffffff; --bg-gray: #f5f5f7; --accent: #0071e3; --accent-hover: #0077ed; --nav-height: 48px; --ease-out: cubic-bezier(0.25, 0.1, 0.25, 1); --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, "PingFang SC", "Microsoft YaHei", sans-serif; color: var(--text-primary); background: var(--bg-white); line-height: 1.5; font-size: 17px; overflow-x: hidden; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+.page-fade-in { animation: pageFadeIn 0.6s var(--ease-out) both; }
+@keyframes pageFadeIn { from { opacity: 0; } to { opacity: 1; } }
+.nav { position: fixed; top: 0; left: 0; right: 0; height: var(--nav-height); background: rgba(255,255,255,0.7); backdrop-filter: saturate(180%) blur(20px); -webkit-backdrop-filter: saturate(180%) blur(20px); z-index: 1000; border-bottom: 1px solid rgba(0,0,0,0.08); transition: background 0.3s ease, box-shadow 0.3s ease; }
+.nav.scrolled { background: rgba(255,255,255,0.9); box-shadow: 0 1px 10px rgba(0,0,0,0.05); }
+.nav-inner { max-width: 1024px; margin: 0 auto; height: 100%; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; }
+.nav-logo { font-size: 18px; font-weight: 600; color: var(--text-primary); letter-spacing: -0.02em; }
+.nav-links { display: flex; gap: 28px; list-style: none; }
+.nav-links a { font-size: 12px; color: var(--text-primary); opacity: 0.8; transition: opacity 0.2s; position: relative; }
+.nav-links a:hover { opacity: 1; text-decoration: none; }
+.nav-links a.active { opacity: 1; font-weight: 500; }
+.nav-links a.active::after { content: ""; position: absolute; bottom: -4px; left: 0; right: 0; height: 2px; background: var(--text-primary); border-radius: 1px; }
+.page-hero { padding-top: calc(var(--nav-height) + 100px); padding-bottom: 40px; text-align: center; }
+.page-hero h1 { font-size: clamp(48px, 8vw, 72px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.05; margin-bottom: 12px; opacity: 0; animation: slideUpFade 0.8s var(--ease-out) 0.1s forwards; }
+.page-hero .price-hint { font-size: 21px; color: var(--text-secondary); opacity: 0; animation: slideUpFade 0.8s var(--ease-out) 0.25s forwards; }
+@keyframes slideUpFade { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+.buy-grid { max-width: 1024px; margin: 0 auto; padding: 40px 22px 80px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.buy-card { background: var(--bg-gray); border-radius: 24px; padding: 40px 32px; text-align: center; transition: all 0.3s var(--ease-out); border: 2px solid transparent; cursor: pointer; }
+.buy-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+.buy-card.selected { border-color: var(--accent); background: #fff; }
+.buy-card h3 { font-size: 21px; font-weight: 600; margin-bottom: 8px; }
+.buy-card .storage { font-size: 15px; color: var(--text-secondary); margin-bottom: 20px; }
+.buy-card .price { font-size: 32px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 24px; }
+.buy-card .price small { font-size: 15px; font-weight: 400; color: var(--text-secondary); }
+.buy-card .features-list { list-style: none; text-align: left; margin-bottom: 28px; }
+.buy-card .features-list li { font-size: 14px; color: var(--text-secondary); padding: 6px 0; padding-left: 20px; position: relative; }
+.buy-card .features-list li::before { content: "✓"; position: absolute; left: 0; color: #34c759; font-weight: 600; }
+.btn-buy { display: inline-block; width: 100%; padding: 14px 24px; background: var(--accent); color: #fff; border-radius: 980px; font-size: 17px; transition: all 0.25s var(--ease-out); border: none; cursor: pointer; font-family: inherit; }
+.btn-buy:hover { background: var(--accent-hover); transform: scale(1.02); }
+.color-section { max-width: 600px; margin: 0 auto; padding: 0 22px 60px; text-align: center; }
+.color-section h3 { font-size: 21px; font-weight: 600; margin-bottom: 20px; }
+.color-options { display: flex; justify-content: center; gap: 20px; }
+.color-option { width: 48px; height: 48px; border-radius: 50%; cursor: pointer; border: 3px solid transparent; transition: all 0.2s var(--ease-out); box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+.color-option:hover { transform: scale(1.1); }
+.color-option.selected { border-color: var(--accent); transform: scale(1.1); }
+.color-option.silver { background: #f5f5f7; }
+.color-option.black { background: #1d1d1f; }
+.color-option.titanium { background: #c7c7cc; }
+.extra-info { background: var(--bg-gray); padding: 60px 22px; }
+.extra-info-inner { max-width: 800px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; text-align: center; }
+.info-item h4 { font-size: 17px; font-weight: 600; margin-bottom: 8px; }
+.info-item p { font-size: 14px; color: var(--text-secondary); line-height: 1.5; }
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.toast { position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.85); color: #fff; padding: 14px 28px; border-radius: 12px; font-size: 15px; z-index: 9999; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+.toast.show { opacity: 1; }
+.footer { background: var(--bg-gray); padding: 30px 22px; border-top: 1px solid #d2d2d7; font-size: 12px; color: var(--text-secondary); }
+.footer-inner { max-width: 1024px; margin: 0 auto; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+.footer-links { display: flex; gap: 20px; list-style: none; }
+.footer-links span { color: var(--text-secondary); font-size: 12px; }
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .buy-grid { grid-template-columns: 1fr; }
+  .extra-info-inner { grid-template-columns: 1fr; gap: 24px; }
+  .footer-inner { flex-direction: column; }
+}
+</style>
+</head>
+<body class="page-fade-in">
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Nova</a>
+    <ul class="nav-links">
+      <li><a href="index.html">概览</a></li>
+      <li><a href="features.html">功能</a></li>
+      <li><a href="performance.html">性能</a></li>
+      <li><a href="design.html">设计</a></li>
+      <li><a href="buy.html" class="active">购买</a></li>
+    </ul>
+  </div>
+</nav>
+<section class="page-hero">
+  <h1>购买 Nova One</h1>
+  <p class="price-hint">从 ¥6,499 起，或每月 ¥270.42 起。</p>
+</section>
+<section class="color-section reveal">
+  <h3>选择配色</h3>
+  <div class="color-options">
+    <div class="color-option silver selected" data-color="星光银" onclick="selectColor(this)"></div>
+    <div class="color-option black" data-color="深空黑" onclick="selectColor(this)"></div>
+    <div class="color-option titanium" data-color="钛金色" onclick="selectColor(this)"></div>
+  </div>
+</section>
+<section class="buy-grid">
+  <div class="buy-card reveal" data-storage="128GB" data-price="6499">
+    <h3>Nova One</h3>
+    <div class="storage">128GB</div>
+    <div class="price">¥6,499</div>
+    <ul class="features-list">
+      <li>N1 芯片</li>
+      <li>超视网膜 XDR 显示屏</li>
+      <li>全天续航</li>
+      <li>MagSafe 无线充电</li>
+    </ul>
+    <button class="btn-buy" onclick="buyNow('Nova One 128GB')">立即购买</button>
+  </div>
+  <div class="buy-card reveal selected" data-storage="256GB" data-price="7299">
+    <h3>Nova One</h3>
+    <div class="storage">256GB</div>
+    <div class="price">¥7,299</div>
+    <ul class="features-list">
+      <li>N1 芯片</li>
+      <li>超视网膜 XDR 显示屏</li>
+      <li>全天续航</li>
+      <li>MagSafe 无线充电</li>
+      <li>额外存储空间</li>
+    </ul>
+    <button class="btn-buy" onclick="buyNow('Nova One 256GB')">立即购买</button>
+  </div>
+  <div class="buy-card reveal" data-storage="512GB" data-price="8999">
+    <h3>Nova One Pro</h3>
+    <div class="storage">512GB</div>
+    <div class="price">¥8,999</div>
+    <ul class="features-list">
+      <li>N1 Pro 芯片</li>
+      <li>超视网膜 XDR Pro 显示屏</li>
+      <li>全天续航 + 快充</li>
+      <li>Pro 级摄像头系统</li>
+      <li>512GB 大容量存储</li>
+    </ul>
+    <button class="btn-buy" onclick="buyNow('Nova One Pro 512GB')">立即购买</button>
+  </div>
+</section>
+<section class="extra-info">
+  <div class="extra-info-inner">
+    <div class="info-item reveal">
+      <h4>免费送货</h4>
+      <p>订单满 ¥1,000 免运费，预计 1-3 个工作日送达。</p>
+    </div>
+    <div class="info-item reveal">
+      <h4>14 天无理由退货</h4>
+      <p>购买后 14 天内，完好包装可申请退货。</p>
+    </div>
+    <div class="info-item reveal">
+      <h4>一年保修</h4>
+      <p>整机一年有限保修，主要部件两年保修。</p>
+    </div>
+  </div>
+</section>
+<footer class="footer">
+  <div class="footer-inner">
+    <div>Copyright © 2026 Nova Inc. 保留所有权利。</div>
+    <ul class="footer-links">
+      <li><span>隐私政策</span></li>
+      <li><span>使用条款</span></li>
+      <li><span>销售政策</span></li>
+    </ul>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 30); });
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); revealObserver.unobserve(entry.target); } });
+}, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+let selectedColor = '星光银';
+function selectColor(el) {
+  document.querySelectorAll('.color-option').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedColor = el.dataset.color;
+}
+document.querySelectorAll('.buy-card').forEach(card => {
+  card.addEventListener('click', function(e) {
+    if (e.target.classList.contains('btn-buy')) return;
+    document.querySelectorAll('.buy-card').forEach(c => c.classList.remove('selected'));
+    this.classList.add('selected');
+  });
+});
+function buyNow(product) { showToast('已选择 ' + product + ' (' + selectedColor + ') — 演示模式：支付未开放'); }
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => { toast.classList.remove('show'); }, 2500);
+}
+document.querySelectorAll('a[href$".html"]').forEach(link => {
+  link.addEventListener('click', function(e) {
+    e.preventDefault();
+    const href = this.getAttribute('href');
+    document.body.style.opacity = '0';
+    document.body.style.transition = 'opacity 0.3s ease';
+    setTimeout(() => { window.location.href = href; }, 300);
+  });
+});
+</script>
+</body>
+</html>
